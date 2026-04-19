@@ -1,12 +1,23 @@
 package ru.hogwarts.school.model;
 
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "student")
 public class Student {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private int age;
 
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
+    public Student() {
+    }
 
     public Student(Long id, String name, int age) {
         this.id = id;
