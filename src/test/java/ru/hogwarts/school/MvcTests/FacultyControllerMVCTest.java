@@ -61,9 +61,9 @@ public class FacultyControllerMVCTest {
 
         perform
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(faculty.getId())) // Проверяем поле id
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(faculty.getName())) // Проверяем поле name
-                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(faculty.getColor())); // Проверяем поле color
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(faculty.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(faculty.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(faculty.getColor()));
 
     }
 

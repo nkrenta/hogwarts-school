@@ -62,9 +62,9 @@ public class StudentControllerMVCTest {
                         .content(objectMapper.writeValueAsString(student)));
         perform
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(student.getId())) // Проверяем поле id
-                .andExpect(jsonPath("$.name").value(student.getName())) // Проверяем поле name
-                .andExpect(jsonPath("$.age").value(student.getAge())); // Проверяем поле Age
+                .andExpect(jsonPath("$.id").value(student.getId()))
+                .andExpect(jsonPath("$.name").value(student.getName()))
+                .andExpect(jsonPath("$.age").value(student.getAge()));
 
     }
 
@@ -123,7 +123,7 @@ public class StudentControllerMVCTest {
 
     @Test
     public void testGetStudentsByAgeBetween() throws Exception {
-        // Создаем тестовые данные
+
         int minAge = 18;
         int maxAge = 20;
 
@@ -139,21 +139,20 @@ public class StudentControllerMVCTest {
 
         List<Student> students = Arrays.asList(student1, student2);
 
-        // Мокируем поведение сервиса
         when(studentService.findByAgeBetween(minAge, maxAge)).thenReturn(students);
 
         // Выполняем GET-запрос
         mockMvc.perform(MockMvcRequestBuilders.get("/student/age-between")
-                        .param("minAge", String.valueOf(minAge)) // Передаем параметр minAge
-                        .param("maxAge", String.valueOf(maxAge)) // Передаем параметр maxAge
+                        .param("minAge", String.valueOf(minAge))
+                        .param("maxAge", String.valueOf(maxAge))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // Ожидаем статус 200 OK
-                .andExpect(jsonPath("$[0].id").value(1)) // Проверяем поле id первого студента
-                .andExpect(jsonPath("$[0].name").value("Harry Potter")) // Проверяем поле name первого студента
-                .andExpect(jsonPath("$[0].age").value(18)) // Проверяем поле age первого студента
-                .andExpect(jsonPath("$[1].id").value(2)) // Проверяем поле id второго студента
-                .andExpect(jsonPath("$[1].name").value("Hermione Granger")) // Проверяем поле name второго студента
-                .andExpect(jsonPath("$[1].age").value(19)); // Проверяем поле age второго студента
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].name").value("Harry Potter"))
+                .andExpect(jsonPath("$[0].age").value(18))
+                .andExpect(jsonPath("$[1].id").value(2))
+                .andExpect(jsonPath("$[1].name").value("Hermione Granger"))
+                .andExpect(jsonPath("$[1].age").value(19));
 
         // Проверяем, что метод сервиса был вызван с правильными параметрами
         verify(studentService, times(1)).findByAgeBetween(minAge, maxAge);
