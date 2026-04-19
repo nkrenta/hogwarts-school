@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class FacultyServiceImpl implements  FacultyService{
+public class FacultyServiceImpl implements FacultyService {
 
     private final HashMap<Long, Faculty> facultyMap = new HashMap<>();
     private Long COUNTER = 0L;

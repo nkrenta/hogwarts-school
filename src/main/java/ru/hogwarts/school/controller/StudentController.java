@@ -47,7 +47,7 @@ public class StudentController {
     }
 
     @GetMapping("/age-between")
-    public ResponseEntity<List<Student>> findByAgeBetween(@RequestParam int minAge, @RequestParam int maxAge){
+    public ResponseEntity<List<Student>> findByAgeBetween(@RequestParam int minAge, @RequestParam int maxAge) {
         if (minAge > maxAge) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
