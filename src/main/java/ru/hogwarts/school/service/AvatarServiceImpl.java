@@ -97,7 +97,6 @@ private String avatarsDir;
     public Page<Avatar> findAllPaginated(int pageNumber, int pageSize, String sortField, Sort.Direction direction) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(direction, sortField));
         return avatarRepository.findAll(pageable);
-
     }
 
 

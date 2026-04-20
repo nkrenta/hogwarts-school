@@ -20,4 +20,10 @@ public interface StudentService {
     void deleteStudent(Long id);
 
     Student editStudent(Student student);
+
+    Long getStudentsCount();
+
+    Double getStudentsAverageAge();
+
+    List<Student> getLastFiveStudents();
 }

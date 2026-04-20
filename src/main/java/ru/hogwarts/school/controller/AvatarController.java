@@ -2,12 +2,9 @@ package ru.hogwarts.school.controller;
 
 
 import ru.hogwarts.school.model.Avatar;
-import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.service.AvatarService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,8 +23,7 @@ import java.nio.file.Path;
 @RequestMapping("/avatar")
 public class AvatarController {
 
-    private AvatarService avatarService;
-    private AvatarRepository avatarRepository;
+    private final AvatarService avatarService;
 
     public AvatarController(AvatarService avatarService) {
         this.avatarService = avatarService;
@@ -70,8 +66,7 @@ public class AvatarController {
     }
 
     @GetMapping(value = "/all")
-    public ResponseEntity<Page<Avatar>> downloadAvatarByPage(@RequestParam("page") int page, @RequestParam("size") int size) throws IOException {
-        Pageable pageable = PageRequest.of(page, size);
+    public ResponseEntity<Page<Avatar>> getAvatarsByPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
         Page<Avatar> avatars = avatarService.findAllPaginated(page, size, "id", Sort.Direction.DESC);
         return ResponseEntity.ok(avatars);
     }

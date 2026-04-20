@@ -2,6 +2,7 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,11 @@ public class StudentServiceImpl implements StudentService {
 
     private final HashMap<Long, Student> studentMap = new HashMap<>();
     private Long COUNTER = 0L;
+    private final StudentRepository studentRepository;
+
+    public StudentServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     @Override
     public Student addStudent(Student student) {
@@ -61,6 +67,21 @@ public class StudentServiceImpl implements StudentService {
             result.computeIfAbsent(student.getId(), k -> new java.util.ArrayList<>()).add(student);
         }
         return result;
+    }
+
+    @Override
+    public Long getStudentsCount() {
+        return studentRepository.countAllStudents();
+    }
+
+    @Override
+    public Double getStudentsAverageAge() {
+        return studentRepository.getAverageAge();
+    }
+
+    @Override
+    public List<Student> getLastFiveStudents() {
+        return studentRepository.findLastFiveStudents();
     }
 
 }
