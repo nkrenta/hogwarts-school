@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: nkrenta
+      changes:
+        - sqlFile:
+            path: changesets/index-practice.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 2
+      author: nkrenta
+      changes:
+        - sqlFile:
+            path: changesets/index-practice.sql
+            relativeToChangelogFile: true
