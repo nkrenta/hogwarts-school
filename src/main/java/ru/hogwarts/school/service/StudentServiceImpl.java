@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
@@ -20,8 +22,11 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+
     @Override
     public Student addStudent(Student student) {
+        logger.info("was invoked method for create new student");
         student.setId(++COUNTER);
         studentMap.put(student.getId(), student);
         return student;
@@ -29,11 +34,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudent(Long id) {
+        logger.info("was invoked method for get student by id");
         return studentMap.get(id);
     }
 
     @Override
     public Student editStudent(Student student) {
+        logger.info("was invoked method for edit student");
         if (!studentMap.containsKey(student.getId())) {
             return null;
         }
@@ -43,11 +50,13 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void deleteStudent(Long id) {
+        logger.info("was invoked method for delete student by id");
         studentMap.remove(id);
     }
 
     @Override
     public List<Student> getStudentsByAge(int age) {
+        logger.info("was invoked method for get students by age");
         return studentMap.values().stream()
                 .filter(student -> student.getAge() == age)
                 .collect(Collectors.toList());
@@ -55,6 +64,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> findByAgeBetween(int min, int max) {
+        logger.info("was invoked method for get students by age between");
         return studentMap.values().stream()
                 .filter(student -> student.getAge() >= min && student.getAge() <= max)
                 .collect(Collectors.toList());
@@ -62,6 +72,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Map<Long, List<Student>> getAllStudents() {
+        logger.info("was invoked method for get all students");
         Map<Long, List<Student>> result = new HashMap<>();
         for (Student student : studentMap.values()) {
             result.computeIfAbsent(student.getId(), k -> new java.util.ArrayList<>()).add(student);
@@ -71,16 +82,19 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Long getStudentsCount() {
+        logger.info("was invoked method for get students count");
         return studentRepository.countAllStudents();
     }
 
     @Override
     public Double getStudentsAverageAge() {
+        logger.info("was invoked method for get students average age");
         return studentRepository.getAverageAge();
     }
 
     @Override
     public List<Student> getLastFiveStudents() {
+        logger.info("was invoked method for get last five students");
         return studentRepository.findLastFiveStudents();
     }
 
