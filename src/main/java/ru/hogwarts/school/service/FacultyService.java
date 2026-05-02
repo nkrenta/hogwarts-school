@@ -20,4 +20,8 @@ public interface FacultyService {
     void deleteFaculty(Long id);
 
     Faculty findFacultyByColorOrName(String color, String name);
+
+    String getLongestFacultyName();
+
+    Integer getStreamParallelAmount();
 }

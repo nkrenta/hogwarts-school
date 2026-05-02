@@ -80,6 +80,32 @@ public class StudentServiceImpl implements StudentService {
         return result;
     }
 
+    //Stream-API
+    @Override
+    public List<String> findAllStudentsWhichNameStarts(String letter) {
+        logger.info("was invoked method for get all students which name starts");
+        return studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .filter(name -> name.toUpperCase().startsWith(letter.toUpperCase()))
+                .sorted()
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+    }
+
+    //Stream-API
+    @Override
+    public Integer getAverageAgeStudents() {
+        logger.info("was invoked method for get average age students");
+        List<Student> students = studentRepository.findAll();
+        if (students.isEmpty()) {
+            return 0;
+        }
+        return students.stream()
+                .mapToInt(Student::getAge)
+                .sum() / students.size();
+    }
+
     @Override
     public Long getStudentsCount() {
         logger.info("was invoked method for get students count");

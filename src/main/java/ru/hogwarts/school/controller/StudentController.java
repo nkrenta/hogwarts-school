@@ -54,6 +54,32 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findByAgeBetween(minAge, maxAge));
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> getStudentsCount() {
+        return ResponseEntity.ok(studentService.getStudentsCount());
+    }
+
+    @GetMapping("/average-age")
+    public ResponseEntity<Double> getStudentsAverageAge() {
+        return ResponseEntity.ok(studentService.getStudentsAverageAge());
+    }
+
+    @GetMapping("/last-five")
+    public ResponseEntity<List<Student>> getLastFiveStudents() {
+        return ResponseEntity.ok(studentService.getLastFiveStudents());
+    }
+
+    //Stream-API
+    @GetMapping("/getNameStudentWhichStartFrom")
+    public List<String> getStudentByNameWhichStartFrom (@RequestParam("letter") String letter){
+        return studentService.findAllStudentsWhichNameStarts(letter);
+    }
+    //Stream-API
+    @GetMapping("/getAvgAgeStudents")
+    public Integer getAverageAgeStudents (){
+        return studentService.getAverageAgeStudents();
+    }
+
     @PutMapping
     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
         Student updatedStudent = studentService.editStudent(student);
@@ -70,21 +96,6 @@ public class StudentController {
         }
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Long> getStudentsCount() {
-        return ResponseEntity.ok(studentService.getStudentsCount());
-    }
-
-    @GetMapping("/average-age")
-    public ResponseEntity<Double> getStudentsAverageAge() {
-        return ResponseEntity.ok(studentService.getStudentsAverageAge());
-    }
-
-    @GetMapping("/last-five")
-    public ResponseEntity<List<Student>> getLastFiveStudents() {
-        return ResponseEntity.ok(studentService.getLastFiveStudents());
     }
 
 }
