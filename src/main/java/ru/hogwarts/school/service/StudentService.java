@@ -26,4 +26,11 @@ public interface StudentService {
     Double getStudentsAverageAge();
 
     List<Student> getLastFiveStudents();
+
+    //Stream-API
+    List<String> findAllStudentsWhichNameStarts(String letter);
+
+    //Stream-API
+    Integer getAverageAgeStudents();
+
 }

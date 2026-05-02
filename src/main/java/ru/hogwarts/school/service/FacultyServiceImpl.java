@@ -5,10 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
@@ -64,6 +67,33 @@ public class FacultyServiceImpl implements FacultyService {
             result.computeIfAbsent(faculty.getId(), k -> new java.util.ArrayList<>()).add(faculty);
         }
         return result;
+    }
+
+    //Stream-API
+    @Override
+    public String getLongestFacultyName() {
+        logger.info("was invoked method for get longest faculty name");
+        return facultyMap.values()
+                .stream()
+                .map(Faculty::getName)
+                .filter(Objects::nonNull)
+                .max(Comparator.comparingInt(String::length))
+                .orElse(null);
+    }
+
+    //Stream-API
+    @Override
+    public Integer getStreamParallelAmount(){
+        logger.info("was invoked method for get stream parallel amount");
+        long startTime = System.nanoTime();
+        int sum = IntStream.iterate(1, a->a+1)
+                .parallel()
+                .limit(1_000_000)
+                .reduce(0, Integer::sum);
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        System.out.println("Метод выполнился за" +(duration/1_000_000)+ "мс");
+        return sum;
     }
 
     @Override

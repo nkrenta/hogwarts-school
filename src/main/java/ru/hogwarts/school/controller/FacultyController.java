@@ -55,6 +55,18 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
+    //Stream-API
+    @GetMapping("/getLongestFacultyName")
+    public String getLongestFacultyName() {
+        return facultyService.getLongestFacultyName();
+    }
+
+    //Stream-API
+    @GetMapping("/getStreamParallelAmount")
+    public Integer getStreamParallelAmount(){
+        return facultyService.getStreamParallelAmount();
+    }
+
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
         Faculty updatedFaculty = facultyService.editFaculty(faculty);
