@@ -106,6 +106,52 @@ public class StudentServiceImpl implements StudentService {
                 .sum() / students.size();
     }
 
+    //Threads
+    @Override
+    public void getStudentsPrintParallel(){
+        studentRepository.findAll()
+                .stream()
+                .map(Student::getName)
+                .limit(3)
+                .forEach(System.out::println);
+
+        new Thread(()-> {
+            try {
+                Thread.sleep(2000);
+            }catch (InterruptedException e){
+                throw new RuntimeException(e);
+            }
+            studentRepository.findAll()
+                    .stream()
+                    .map(Student::getName)
+                    .skip(3)
+                    .limit(3)
+                    .forEach(System.out::println);
+        }).start();
+
+        new Thread (()-> {
+            try {
+                Thread.sleep(2000);
+            }catch (InterruptedException e){
+                throw new RuntimeException(e);
+            }
+            studentRepository.findAll()
+                    .stream()
+                    .map(Student::getName)
+                    .skip(6)
+                    .forEach(System.out::println);
+        }).start();
+
+    }
+
+    //Threads
+    @Override
+    public void getStudentsPrintSynchronized(){
+       synchronized (StudentServiceImpl.class){
+        getStudentsPrintParallel();
+       }
+    }
+
     @Override
     public Long getStudentsCount() {
         logger.info("was invoked method for get students count");
