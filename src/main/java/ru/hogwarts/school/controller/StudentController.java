@@ -80,6 +80,18 @@ public class StudentController {
         return studentService.getAverageAgeStudents();
     }
 
+    //Threads
+    @GetMapping("/print-parallel")
+    public void getStudentsPrintParallel(){
+        studentService.getStudentsPrintParallel();
+    }
+
+    //Threads
+    @GetMapping("/print-synchronized")
+    public void getStudentsPrintSynchronized(){
+        studentService.getStudentsPrintSynchronized();
+    }
+
     @PutMapping
     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
         Student updatedStudent = studentService.editStudent(student);

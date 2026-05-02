@@ -33,4 +33,10 @@ public interface StudentService {
     //Stream-API
     Integer getAverageAgeStudents();
 
+    //Threads
+    void getStudentsPrintParallel();
+
+    //Threads
+    void getStudentsPrintSynchronized();
+
 }
